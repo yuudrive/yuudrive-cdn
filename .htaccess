@@ -1,0 +1,19 @@
+#RewriteCond %{HTTP_HOST} ^cgs.yuudrive.me$ [OR]
+# cookieless domain for images and stuff
+RewriteBase /
+RewriteRule ^js/6576815c5202ef23c57b797dfcb29d95.js$ js/gpicker.min.php [L]
+RewriteCond %{HTTP_HOST} ^cgs\.yuudrive\.me [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^(.*)$ https://yuudrive.me/$1 [R=301,L]
+
+<IfModule mod_headers.c>
+<FilesMatch "\\.(js|css|jpg|png|jpeg|gif)$">
+RequestHeader unset Cookie
+Header unset Set-Cookie
+Header unset ETag
+FileETag None
+</FilesMatch>
+</IfModule>
+# disable directory browsing
+Options All -Indexes
